@@ -405,7 +405,7 @@ FodyWeavers.xsd
 ##
 ## SQLite
 ##
-backend/*.db
+*.db
 *.db-shm
 *.db-wal
 *.sqbpro
