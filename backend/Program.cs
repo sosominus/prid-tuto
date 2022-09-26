@@ -14,6 +14,13 @@ builder.Services.AddDbContext<MsnContext>(opt => opt.UseSqlite("Data Source=msn.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped(provider => new MapperConfiguration(cfg => {
+        cfg.AddProfile(new MappingProfile(provider.GetService<MsnContext>()!));
+        // see: https://github.com/AutoMapper/AutoMapper.Collection
+        cfg.AddCollectionMappers();
+        cfg.UseEntityFrameworkCoreModel<MsnContext>(builder.Services);
+    }).CreateMapper());
+
 
 var app = builder.Build();
 
@@ -43,14 +50,6 @@ if (context?.Database.IsSqlite() == true)
 else
     context?.Database.EnsureDeleted();
 context?.Database.EnsureCreated();
-
-    // Auto Mapper Configurations
-    /*builder.Services.AddScoped(provider => new MapperConfiguration(cfg => {
-        cfg.AddProfile(new MappingProfile(context!));
-        // see: https://github.com/AutoMapper/AutoMapper.Collection
-        cfg.AddCollectionMappers();
-        cfg.UseEntityFrameworkCoreModel<MsnContext>(builder.Services);
-    }).CreateMapper());*/
 
 app.UseAuthorization();
 

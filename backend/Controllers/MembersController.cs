@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prid_tuto.Models;
+using AutoMapper;
+using PRID_Framework;
 
 
 namespace prid_tuto.Controllers;
@@ -10,14 +12,16 @@ namespace prid_tuto.Controllers;
 public class MembersController : ControllerBase
 {
     private readonly MsnContext _context;
+    //private readonly IMapper _mapper;
 
     /*
     Le contrôleur est instancié automatiquement par ASP.NET Core quand une requête HTTP est reçue.
     Le paramètre du constructeur recoit automatiquement, par injection de dépendance, 
     une instance du context EF (MsnContext).
     */
-    public MembersController(MsnContext context) {
+    public MembersController(MsnContext context /*, IMapper mapper*/) {
         _context = context;
+        /*_mapper = mapper;*/
     }
 
     // GET: api/Members
